@@ -1,0 +1,1 @@
+class MovieDetailsException implements Exception {}
