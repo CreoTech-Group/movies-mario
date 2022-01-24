@@ -22,21 +22,11 @@ class MoviesRepositoryImpl implements MoviesRepository {
 
   @override
   Future<List<Movie>> getPopularMovies() {
-    return _moviesApi.getPopularMovies()
-    .then((moviesDTOs) {
-      return moviesDTOs.map((movie) => _movieMapper.map(movie)).toList();
-    }, onError: (e) {
-      throw MoviePopularException();
-    });
+    return Future.value();
   }
 
   @override
   Future<MovieDetails> getMovieDetails(String movieId) {
-    return _moviesApi.getMovieDetails(movieId)
-    .then((movieDetailsDTO) {
-      return _movieDetailsMapper.map(movieDetailsDTO);
-    }, onError: (e) {
-      throw MovieDetailsException();
-    });
+    return Future.value();
   }
 }

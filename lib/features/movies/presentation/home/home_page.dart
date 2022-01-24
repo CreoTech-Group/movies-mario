@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:gdg_movies/di/injection_container.dart';
 import 'package:gdg_movies/features/movies/domain/model/movie.dart';
 import 'package:gdg_movies/features/movies/presentation/home/home_presenter.dart';
-import 'package:gdg_movies/features/movies/presentation/home/home_viewmodel.dart';
 import 'package:gdg_movies/features/movies/presentation/home/widget/content_header.dart';
 import 'package:gdg_movies/features/movies/presentation/home/widget/content_list.dart';
 import 'package:gdg_movies/features/movies/presentation/home/widget/custom_app_bar.dart';
@@ -30,12 +28,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  void dispose() {
-    widget._homePresenter.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
@@ -49,28 +41,7 @@ class _HomePageState extends State<HomePage> {
         preferredSize: Size(screenSize.width, 50.0),
         child: CustomAppBar(),
       ),
-      body: StreamBuilder<HomeViewModel>(
-        stream: widget._homePresenter.moviesViewModel,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final viewModel = snapshot.data;
-            if (viewModel is HomeViewModelLoading) {
-              return _HomeLoadingWidget();
-            }
-            if (viewModel is HomeViewModelError) {
-              return _HomeErrorWidget(
-                moviesListPresenter: widget._homePresenter,
-              );
-            }
-            if (viewModel is HomeViewModelContent) {
-              return _HomeListWidget(
-                movies: viewModel.movies,
-              );
-            }
-          }
-          return _HomeLoadingWidget();
-        },
-      ),
+      body: Container()
     );
   }
 }

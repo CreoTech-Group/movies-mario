@@ -6,6 +6,7 @@ import 'package:gdg_movies/features/movies/presentation/home/widget/play_button.
 
 class MovieDetailsPageArguments {
   final String movieId;
+
   MovieDetailsPageArguments({
     required this.movieId,
   });
@@ -28,52 +29,22 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
   @override
   void initState() {
     super.initState();
-    widget._movieDetailsPresenter
-        .fetchMovieDetails(widget._movieDetailsPageArguments.movieId);
-  }
-
-  @override
-  void dispose() {
-    widget._movieDetailsPresenter.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 24),
-            child: const Icon(Icons.cast),
-          )
-        ],
-      ),
-      body: StreamBuilder<MovieDetailsViewModel>(
-          stream: widget._movieDetailsPresenter.movieDetailsViewModel,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              final viewModel = snapshot.data;
-              if (viewModel is MovieDetailsViewModelLoading) {
-                return _MovieDetailsLoadingWidget();
-              }
-              if (viewModel is MovieDetailsViewModelContent) {
-                print(viewModel.movieDetails);
-                return _MovieDetailsWidget(
-                    movieDetails: viewModel.movieDetails);
-              }
-              if (viewModel is MovieDetailsViewModelError) {
-                return _MovieDetailsErrorWidget(
-                  movieDetailsPresenter: widget._movieDetailsPresenter,
-                  movieId: widget._movieDetailsPageArguments.movieId,
-                );
-              }
-            }
-            return _MovieDetailsLoadingWidget();
-          }),
-    );
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 24),
+              child: const Icon(Icons.cast),
+            )
+          ],
+        ),
+        body: Container());
   }
 }
 
@@ -88,6 +59,7 @@ class _MovieDetailsLoadingWidget extends StatelessWidget {
 
 class _MovieDetailsWidget extends StatelessWidget {
   final MovieDetails movieDetails;
+
   const _MovieDetailsWidget({
     Key? key,
     required this.movieDetails,

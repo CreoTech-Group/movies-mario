@@ -8,8 +8,6 @@ import 'package:gdg_movies/features/movies/data/network/model/movie_dto.dart';
 import 'package:gdg_movies/features/movies/di/movies_container.dart';
 import 'package:gdg_movies/features/movies/domain/model/movie_details.dart';
 import 'package:gdg_movies/features/movies/domain/repository/movies_repository.dart';
-import 'package:gdg_movies/features/movies/domain/usecase/get_movie_details_usecase.dart';
-import 'package:gdg_movies/features/movies/domain/usecase/get_popular_movies_usecase.dart';
 import 'package:gdg_movies/features/movies/presentation/details/movie_details_presenter.dart';
 import 'package:gdg_movies/features/movies/presentation/home/home_presenter.dart';
 import 'package:get_it/get_it.dart';
@@ -34,8 +32,6 @@ void _initMoviesDependencies() {
   getIt.registerLazySingleton<Mapper<MovieDTO, Movie>>(() => moviesDependenciesContainer.provideMovieMapper());
   getIt.registerLazySingleton<Mapper<MovieDetailsDTO, MovieDetails>>(() => moviesDependenciesContainer.provideMovieDetailsMapper());
   getIt.registerLazySingleton<MoviesRepository>(() => moviesDependenciesContainer.provideMovieRepository(getIt(), getIt(), getIt()));
-  getIt.registerLazySingleton<GetPopularMoviesUseCase>(() => moviesDependenciesContainer.provideGetPopularMoviesUseCase(getIt()));
-  getIt.registerLazySingleton<GetMovieDetailsUseCase>(() => moviesDependenciesContainer.provideGetMovieDetailsUseCase(getIt()));
-  getIt.registerFactory(() => HomePresenter(getIt()));
-  getIt.registerFactory(() => MovieDetailsPresenter(getIt()));
+  getIt.registerFactory(() => HomePresenter());
+  getIt.registerFactory(() => MovieDetailsPresenter());
 }
