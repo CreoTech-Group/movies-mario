@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:gdg_movies/core/network/api_provider.dart';
 import 'package:gdg_movies/core/network/exceptions/bad_request_exception.dart';
 import 'package:gdg_movies/core/network/exceptions/generic_network_exceptioin.dart';

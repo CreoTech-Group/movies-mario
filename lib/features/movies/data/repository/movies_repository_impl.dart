@@ -1,6 +1,4 @@
 import 'package:gdg_movies/features/movies/data/network/model/movie_details_dto.dart';
-import 'package:gdg_movies/features/movies/domain/model/error/movie_details_error.dart';
-import 'package:gdg_movies/features/movies/domain/model/error/movie_popular_error.dart';
 import 'package:gdg_movies/features/movies/domain/model/movie.dart';
 import 'package:gdg_movies/core/mapper.dart';
 import 'package:gdg_movies/features/movies/data/network/api/movies_api.dart';

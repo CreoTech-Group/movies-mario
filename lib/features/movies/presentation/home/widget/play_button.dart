@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:gdg_movies/features/movies/presentation/home/widget/responsive.dart';
 
 class PlayButton extends StatelessWidget {

@@ -40,5 +40,6 @@ class MovieDetailsPresenter {
 
   void dispose() {
     _compositeSubscription.dispose();
+    _getMovieDetailsTrigger.close();
   }
 }

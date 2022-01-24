@@ -35,5 +35,6 @@ class HomePresenter {
 
   void dispose() {
     _compositeSubscription.dispose();
+    _getPopularMoviesTrigger.close();
   }
 }
