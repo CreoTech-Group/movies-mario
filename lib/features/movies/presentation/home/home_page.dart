@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:gdg_movies/features/movies/domain/model/movie.dart';
 import 'package:gdg_movies/features/movies/presentation/home/home_presenter.dart';
+import 'package:gdg_movies/features/movies/presentation/home/home_viewmodel.dart';
 import 'package:gdg_movies/features/movies/presentation/home/widget/content_header.dart';
 import 'package:gdg_movies/features/movies/presentation/home/widget/content_list.dart';
 import 'package:gdg_movies/features/movies/presentation/home/widget/custom_app_bar.dart';
@@ -20,11 +21,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   void initState() {
     super.initState();
     widget._homePresenter.getPopularMovies();
+  }
+
+  @override
+  void dispose() {
+    widget._homePresenter.dispose();
+    super.dispose();
   }
 
   @override
@@ -41,7 +47,24 @@ class _HomePageState extends State<HomePage> {
         preferredSize: Size(screenSize.width, 50.0),
         child: CustomAppBar(),
       ),
-      body: Container()
+      body: StreamBuilder<HomeViewModel>(
+        initialData: HomeViewModel.loading(),
+        stream: widget._homePresenter.moviesViewModel,
+        builder: (context, snapshot) {
+          if (snapshot.data is HomeViewModelLoading)
+            return _HomeLoadingWidget();
+
+          if (snapshot.data is HomeViewModelContent)
+            return _HomeListWidget(
+              movies: (snapshot.data as HomeViewModelContent).movies,
+            );
+
+          if (snapshot.data is HomeViewModelError)
+            return _HomeErrorWidget(moviesListPresenter: widget._homePresenter);
+
+          return SizedBox.shrink();
+        },
+      ),
     );
   }
 }
@@ -57,6 +80,7 @@ class _HomeLoadingWidget extends StatelessWidget {
 
 class _HomeErrorWidget extends StatelessWidget {
   final HomePresenter moviesListPresenter;
+
   const _HomeErrorWidget({
     Key? key,
     required this.moviesListPresenter,
@@ -82,6 +106,7 @@ class _HomeErrorWidget extends StatelessWidget {
 
 class _HomeListWidget extends StatelessWidget {
   final List<Movie> movies;
+
   const _HomeListWidget({
     Key? key,
     required this.movies,

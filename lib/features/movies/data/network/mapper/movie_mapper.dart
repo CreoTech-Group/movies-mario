@@ -1,7 +1,6 @@
 import 'package:gdg_movies/features/movies/data/network/mapper/image_url_mapper.dart';
 import 'package:gdg_movies/features/movies/domain/model/movie.dart';
 import 'package:gdg_movies/core/mapper.dart';
-import 'package:gdg_movies/core/extensions/null_extensions.dart';
 import 'package:gdg_movies/features/movies/data/network/model/movie_dto.dart';
 
 class MovieMapper extends Mapper<MovieDTO, Movie> {
@@ -12,6 +11,4 @@ class MovieMapper extends Mapper<MovieDTO, Movie> {
       image: mapImageUrl(input.image),
     );
   }
-
-  
 }

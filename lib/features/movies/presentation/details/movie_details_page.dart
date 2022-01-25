@@ -29,6 +29,14 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
   @override
   void initState() {
     super.initState();
+    widget._movieDetailsPresenter
+        .fetchMovieDetails(widget._movieDetailsPageArguments.movieId);
+  }
+
+  @override
+  void dispose() {
+    widget._movieDetailsPresenter.dispose();
+    super.dispose();
   }
 
   @override
@@ -44,7 +52,27 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
             )
           ],
         ),
-        body: Container());
+        body: StreamBuilder<MovieDetailsViewModel>(
+          initialData: MovieDetailsViewModel.loading(),
+          stream: widget._movieDetailsPresenter.movieDetailsViewModel,
+          builder: (context, snapshot) {
+            if (snapshot.data is MovieDetailsViewModelLoading)
+              return _MovieDetailsLoadingWidget();
+
+            if (snapshot.data is MovieDetailsViewModelContent)
+              return _MovieDetailsWidget(
+                movieDetails: (snapshot.data as MovieDetailsViewModelContent)
+                    .movieDetails,
+              );
+
+            if (snapshot.data is MovieDetailsViewModelError)
+              return _MovieDetailsErrorWidget(
+                  movieDetailsPresenter: widget._movieDetailsPresenter,
+                  movieId: widget._movieDetailsPageArguments.movieId);
+
+            return SizedBox.shrink();
+          },
+        ));
   }
 }
 
